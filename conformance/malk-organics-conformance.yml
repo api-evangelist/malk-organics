@@ -1,0 +1,111 @@
+generated: '2026-08-25'
+method: probed
+source: >-
+  https://malkorganics.com/.well-known/ucp.json,
+  https://malkorganics.com/.well-known/openid-configuration,
+  https://malkorganics.com/.well-known/oauth-protected-resource,
+  https://malkorganics.com/api/ucp/mcp (tools/list),
+  https://malkorganics.com/agents.md
+notes: >-
+  Cross-cutting standards MALK Organics's public agent-commerce surface conforms to, read from
+  its own live discovery documents and a live JSON-RPC probe of its MCP endpoint. MALK
+  publishes no OpenAPI, so every assertion below is evidenced by a document or response
+  captured in this repo, not by a marketing claim.
+standards:
+- id: mcp
+  conforms: true
+  evidence: >-
+    POST https://malkorganics.com/api/ucp/mcp with {"jsonrpc":"2.0","method":"tools/list"}
+    returned HTTP 200 and 13 tools with JSON Schema 2020-12 inputSchemas. Saved verbatim to
+    mcp/malk-organics-mcp-tools.json.
+- id: ucp
+  conforms: true
+  evidence: >-
+    /.well-known/ucp and /.well-known/ucp.json both return 200 with a UCP merchant profile
+    declaring version 2026-04-08 (and 2026-01-23), the dev.ucp.shopping service over an MCP
+    transport, eight capabilities, and two payment handlers.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server advertises authorization_code, refresh_token and
+    jwt-bearer grants with client_secret_basic / client_secret_post token auth.
+- id: oidc
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration issuer https://shopify.com/authentication/64317849670
+    with RS256 id_token signing, jwks_uri, and the standard OIDC claim set.
+- id: oauth2-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256.
+- id: rfc8414-oauth-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server (RFC 8414) returns 200 with a real document.
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource returns 200 declaring resource
+    https://malkorganics.com, its authorization server, and bearer_methods_supported [header].
+- id: json-schema-2020-12
+  conforms: true
+  evidence: >-
+    Every MCP tool inputSchema declares
+    $schema https://json-schema.org/draft/2020-12/schema.
+- id: idempotency
+  conforms: true
+  evidence: >-
+    complete_checkout requires meta.idempotency-key ("An idempotency key for completing the
+    checkout") in its inputSchema.
+- id: pagination
+  conforms: true
+  evidence: >-
+    search_catalog is cursor-paginated - "Use the pagination.cursor from the response to fetch
+    additional pages".
+- id: iso-4217
+  conforms: true
+  evidence: >-
+    Every money value is an integer in ISO 4217 minor units paired with an ISO 4217 currency
+    code, stated in each tool description.
+- id: iso-3166-1-alpha-2
+  conforms: true
+  evidence: catalog.context.address_country is documented as ISO 3166-1 alpha-2.
+- id: bcp47
+  conforms: true
+  evidence: catalog.context.language is documented as an IETF BCP 47 language tag.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    /llms.txt returns 200 with a structured, hand-maintained AI content index
+    ("Maintained by MALK Organics Marketing", last updated July 2026).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json surface is published; MCP returns JSON-RPC errors.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document found on any probed path (see x-coverage evidence in apis.yml).
+domain_standard:
+  id: ucp
+  name: Universal Commerce Protocol (UCP) 2026-04-08
+  market: retail / direct-to-consumer e-commerce (agentic commerce)
+  declared: true
+  signature: >-
+    The contract declares its own domain standard: /.well-known/ucp.json carries
+    ucp.version "2026-04-08", a dev.ucp.shopping service bound to
+    https://ucp.dev/2026-04-08/specification/overview/ over an MCP transport with the
+    OpenRPC schema https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json, and eight
+    namespaced capabilities (dev.ucp.shopping.checkout, .fulfillment, .discount, .cart,
+    .order, .catalog.search, .catalog.lookup, plus the dev.shopify.catalog extension). Each
+    tool description in the live tools/list response names the UCP capability it conforms to.
+  spec: https://ucp.dev/2026-04-08/specification/overview/
+  evidence_files:
+  - well-known/malk-organics-ucp.json
+  - mcp/malk-organics-mcp-tools.json
+  operator_attribution:
+    endpoint_on_provider_domain: true
+    note: >-
+      The UCP discovery document names the canonical service endpoint on the vendor domain
+      (https://malkorganics.myshopify.com/api/ucp/mcp), but MALK's own /agents.md and
+      /robots.txt publish https://malkorganics.com/api/ucp/mcp and that host answered
+      tools/list with HTTP 200 and 13 tools on 2026-08-25. Both were probed; both are live.
+      The implementation is Shopify's platform UCP, deployed under MALK's merchant identity
+      (merchant_name MalkOrganics, merchant_origin malkorganics.com, shop id 64317849670).

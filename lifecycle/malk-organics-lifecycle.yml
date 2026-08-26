@@ -1,0 +1,47 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  https://malkorganics.com/agents.md,
+  https://malkorganics.com/.well-known/ucp.json
+docs: https://malkorganics.com/agents.md
+notes: >-
+  MALK Organics publishes no API versioning policy, deprecation policy, SLA or status page of
+  its own. What it does publish is the UCP protocol version its store supports, and a
+  version-pinned discovery path. Everything below is read from those documents; the absences
+  are recorded as absences.
+versioning:
+  scheme: date-based protocol version (UCP)
+  current: '2026-04-08'
+  supported:
+  - version: '2026-04-08'
+    label: latest stable
+    discovery: https://malkorganics.myshopify.com/.well-known/ucp/2026-04-08
+  - version: '2026-01-23'
+    discovery: https://malkorganics.myshopify.com/.well-known/ucp/2026-01-23
+  negotiation: >-
+    The unpinned /.well-known/ucp (and /.well-known/ucp.json) returns the latest stable
+    profile; version-pinned profiles are listed under ucp.supported_versions.
+  owner: >-
+    The version cadence is the Universal Commerce Protocol's (ucp.dev) and Shopify's, not
+    MALK's. MALK adopts what its platform ships.
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  deprecation_header: not observed
+  rfc8594: false
+  note: >-
+    No deprecation or sunset policy is published for this surface. The two supported UCP
+    versions are advertised without any stated end-of-life.
+sla:
+  published: false
+status_page:
+  published: false
+  note: >-
+    MALK operates no status page. The underlying platform status page (status.shopify.com) is
+    Shopify's, covers every Shopify store, and is deliberately NOT wired as a MALK StatusPage
+    pointer - it is not a page MALK publishes about MALK's API.
+changelog:
+  published: false
+  note: >-
+    No dated API changelog. /blogs/news is a brand and press blog, not a developer changelog.
+deprecated_operations: []

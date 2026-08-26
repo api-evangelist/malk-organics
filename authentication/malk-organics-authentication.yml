@@ -1,0 +1,41 @@
+generated: '2026-08-25'
+method: searched
+source: https://malkorganics.com/.well-known/openid-configuration
+docs: https://shopify.dev/docs/api/customer
+notes: >-
+  MALK Organics publishes no OpenAPI, so this profile is read from the live OIDC / OAuth 2.0
+  authorization-server and protected-resource discovery documents served on malkorganics.com.
+  Authentication is Shopify Customer Accounts - OpenID Connect over OAuth 2.0 Authorization
+  Code with PKCE (S256). The UCP/MCP catalog and cart tools answer anonymously; completing a
+  checkout requires contemporaneous buyer approval, and the Customer Account surfaces require
+  a signed-in buyer token.
+summary:
+  types: [oauth2, openIdConnect]
+  oauth2_flows: [authorizationCode, refreshToken, jwt-bearer]
+  pkce: S256
+  token_endpoint_auth: [client_secret_basic, client_secret_post]
+  anonymous_surface: >-
+    MCP tools/list and the catalog/cart tools returned HTTP 200 with no credentials.
+schemes:
+- name: ShopifyCustomerAccountOIDC
+  type: openIdConnect
+  issuer: https://shopify.com/authentication/64317849670
+  openIdConnectUrl: https://malkorganics.com/.well-known/openid-configuration
+  authorizationUrl: https://shopify.com/authentication/64317849670/oauth/authorize
+  tokenUrl: https://shopify.com/authentication/64317849670/oauth/token
+  endSessionUrl: https://shopify.com/authentication/64317849670/logout
+  jwksUri: https://shopify.com/authentication/64317849670/.well-known/jwks.json
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+  code_challenge_methods: [S256]
+  id_token_signing_alg: [RS256]
+  sources: [well-known/malk-organics-openid-configuration.json]
+protected_resource:
+  resource: https://malkorganics.com
+  authorization_servers:
+  - https://shopify.com/authentication/64317849670
+  bearer_methods_supported: [header]
+  spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  sources: [well-known/malk-organics-oauth-protected-resource.json]

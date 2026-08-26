@@ -1,0 +1,28 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, api.github.com/users/Malkorganics,
+  https://malkorganics.com/agents.md
+notes: >-
+  No first-party MALK Organics client library, SDK or CLI exists on any public registry. npm
+  search for "malk-organics" and "malkorganics" returned no MALK package; PyPI
+  /pypi/malk-organics/json returned 404. The only GitHub account matching the name
+  (github.com/Malkorganics) is a personal user account with one unrelated HTML "Searchbar"
+  demo last pushed 2025-07-11 - it is NOT the company, and is deliberately not wired as a
+  GitHubOrganization pointer. MALK's own /agents.md points agents at the Shopify Shop skill
+  (https://shop.app/SKILL.md), which is Shopify's, not MALK's. Honest zero.
+package_count: 0
+packages: []
+third_party_clients:
+- name: Shop skill
+  vendor: Shopify
+  url: https://shop.app/SKILL.md
+  official: false
+  first_party_to_malk: false
+  version: null
+  published: null
+  registry: null
+  note: >-
+    Recommended by MALK's agents.md as the cross-store transaction path, but it is a Shopify
+    platform artifact covering every Shopify store, not a MALK-published package. No registry
+    metadata endpoint exists for it, so version/published are null by fact, not by omission.

@@ -1,0 +1,55 @@
+generated: '2026-08-25'
+method: probed
+source: live probes of https://malkorganics.com/.well-known/*
+notes: >-
+  Probed the /.well-known/ discovery surface on MALK Organics's primary storefront host. The
+  store runs on Shopify: the OIDC / OAuth 2.0 documents describe Shopify Customer Accounts
+  (issuer https://shopify.com/authentication/64317849670) and the UCP document is the
+  agent-commerce merchant profile naming merchant_origin malkorganics.com. All four saved
+  documents were verified as real JSON payloads, not an SPA catch-all - the 404 paths return
+  a Shopify 404 HTML page, so this host is not answering 200 to everything.
+hosts:
+- host: malkorganics.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: malk-organics-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: malk-organics-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: malk-organics-oauth-protected-resource.json
+  - path: /.well-known/ucp
+    status: 200
+    file: malk-organics-ucp.json
+  - path: /.well-known/ucp.json
+    status: 200
+    file: malk-organics-ucp.json
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+other_agent_surfaces:
+- path: /llms.txt
+  status: 200
+  file: ../llms/malk-organics-llms.txt
+- path: /agents.md
+  status: 200
+  file: ../skills/malk-organics-agents.md
+- path: /robots.txt
+  status: 200
+  note: >-
+    Carries agent-directed comments pointing at /agents.md, /.well-known/ucp and the UCP/MCP
+    endpoint, and states checkout must not be completed without contemporaneous human approval.
+- path: /sitemap_agentic_discovery.xml
+  status: 200
+  note: Dedicated agent-discovery sitemap listing /agents.md.

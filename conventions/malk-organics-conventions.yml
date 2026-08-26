@@ -1,0 +1,140 @@
+generated: '2026-08-25'
+method: derived
+source: >-
+  https://malkorganics.com/api/ucp/mcp (live tools/list, 13 tool inputSchemas),
+  https://malkorganics.com/agents.md,
+  https://malkorganics.com/.well-known/ucp.json
+docs: https://malkorganics.com/agents.md
+notes: >-
+  Cross-cutting runtime semantics for MALK Organics's UCP/MCP commerce surface, derived from
+  the live tool schemas and the provider's own /agents.md agent-instructions document. There
+  is no OpenAPI, so nothing here is derived from a spec; every rule below traces to a schema
+  field or a sentence MALK publishes.
+auth:
+  style: none-for-read; buyer-approved-for-write
+  detail: >-
+    Catalog and cart tools answer anonymously over JSON-RPC. Completing a checkout requires
+    contemporaneous, explicit buyer approval; agents.md and robots.txt both forbid scripted
+    or automated payment completion.
+  cross_ref: authentication/malk-organics-authentication.yml
+idempotency:
+  supported: true
+  mechanism: request-field
+  field: meta.idempotency-key
+  scope: complete_checkout
+  required: true
+  evidence: >-
+    complete_checkout inputSchema declares meta.idempotency-key (string, "An idempotency key
+    for completing the checkout") and lists it in meta.required.
+  retention: not stated
+  note: >-
+    Idempotency is enforced on the single money-moving operation. No idempotency key is
+    accepted on cart or checkout creation/update.
+pagination:
+  style: cursor
+  request_field: catalog.pagination.cursor
+  response_field: pagination.cursor
+  scope: [search_catalog, lookup_catalog]
+  evidence: >-
+    search_catalog description: "Results are paginated, with initial results limited to
+    improve experience. Use the pagination.cursor from the response to fetch additional pages."
+  page_size_default: not stated
+metadata:
+  envelope: meta
+  required: true
+  detail: >-
+    Every one of the 13 tools requires a meta object carrying meta["ucp-agent"].profile - a
+    URI identifying the calling agent's UCP profile. An agent that does not publish a profile
+    URI cannot call any tool.
+localization:
+  context_hints:
+  - address_country (ISO 3166-1 alpha-2)
+  - address_region
+  - postal_code
+  - language (IETF BCP 47)
+  - currency (ISO 4217)
+  - intent
+  detail: >-
+    context is provisional; higher-resolution data (a real shipping address) supersedes it,
+    and unsupported hints are ignored without error.
+money:
+  representation: integer minor units + ISO 4217 currency code
+  example: '{"amount": 600, "currency": "USD"} is $6.00'
+  note: >-
+    Stated in every tool description. Agents must convert to major units before quoting a
+    price to a buyer; zero-decimal currencies such as JPY are already whole units.
+identifiers:
+  style: Shopify GID URIs
+  examples:
+  - 'gid://shopify/Checkout/abc123'
+  - 'gid://shopify/Cart/abc123'
+error_envelope:
+  style: JSON-RPC 2.0 error object
+  problem_json: false
+  note: >-
+    No RFC 9457 problem+json surface. complete_checkout returns errors in-band alongside the
+    checkout result. No published error-code reference was found.
+versioning:
+  scheme: date-based protocol versions
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  negotiation: >-
+    Version-pinned discovery documents at /.well-known/ucp/{version}; the unpinned
+    /.well-known/ucp returns the latest stable.
+  cross_ref: conformance/malk-organics-conformance.yml
+rate_limit_signaling:
+  documented: true
+  detail: >-
+    agents.md states "The MCP endpoint is rate-limited per IP. Back off on 429 responses."
+    No numeric limit, window, or RateLimit-* / Retry-After header contract is published.
+  cross_ref: rate-limits/malk-organics-rate-limits.yml
+dry_run_mode:
+  supported: false
+  grade: absent
+  note: >-
+    No dry-run, preview or simulate flag on any write tool. The cart/checkout split is the
+    nearest rehearsal path - an agent can build a cart and a checkout, read totals, taxes and
+    shipping, and never call complete_checkout - but that is a real object, not a dry run.
+reversibility:
+  grade: documented
+  applicable: true
+  note: >-
+    Every write surface below has a published reversal operation, but MALK publishes no window
+    for any of them, so this grades `documented`, not `verified`. No window has been asserted
+    here because none is stated in agents.md, the tool schemas, or the UCP discovery document,
+    and inventing one on a payment surface could cost a buyer real money.
+  surfaces:
+  - write_operation: create_cart
+    reversal: cancel_cart
+    operationId: cancel_cart
+    window: not stated
+    docs: https://malkorganics.com/agents.md
+  - write_operation: update_cart
+    reversal: update_cart
+    operationId: update_cart
+    note: Line items and quantities can be updated or removed in place.
+    window: not stated
+    docs: https://malkorganics.com/agents.md
+  - write_operation: create_checkout
+    reversal: cancel_checkout
+    operationId: cancel_checkout
+    window: >-
+      not stated; by construction a checkout can be cancelled before complete_checkout is
+      called, but MALK publishes no explicit deadline.
+    docs: https://malkorganics.com/agents.md
+  - write_operation: complete_checkout
+    reversal: none published
+    operationId: null
+    window: not stated
+    note: >-
+      Once a checkout is completed there is no refund, void or order-cancel tool in the MCP
+      surface - get_order is read-only. Returns and refunds are handled off-protocol through
+      MALK customer support (https://malkorganics.com/pages/contact). This is the one
+      irreversible step on the surface, which is consistent with MALK requiring explicit
+      buyer approval at exactly that point.
+cross_links:
+  authentication: authentication/malk-organics-authentication.yml
+  scopes: scopes/malk-organics-scopes.yml
+  rate_limits: rate-limits/malk-organics-rate-limits.yml
+  conformance: conformance/malk-organics-conformance.yml
+  mcp: mcp/malk-organics-mcp.yml

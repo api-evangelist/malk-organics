@@ -1,7 +1,17 @@
 aid: malk-organics
 name: MALK Organics
-description: 'MALK Organics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  MALK Organics is an Austin, Texas plant-based beverage company founded in 2015, making
+  clean-label organic almond, oat, cashew, coconut and soy milks plus non-dairy creamers with
+  six ingredients or less and no gums, oils or fillers, sold nationwide through Whole Foods,
+  Target, Kroger, Publix, Albertsons, Costco, H-E-B, Sprouts, Wegmans, Erewhon and Amazon.
+  MALK publishes no traditional developer program, but its Shopify-powered direct-to-consumer
+  storefront at malkorganics.com exposes a real, live agent-commerce surface: a Universal
+  Commerce Protocol (UCP) MCP server answering an anonymous tools/list with 13 catalog, cart,
+  checkout and order tools; OpenID Connect / OAuth 2.0 Customer Accounts authentication; a
+  /.well-known/ucp merchant profile; a hand-maintained /llms.txt AI content index authored by
+  MALK marketing; and an /agents.md agent-instructions document. This profile captures that
+  agent-native commerce surface.
 url: https://raw.githubusercontent.com/api-evangelist/malk-organics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
@@ -10,9 +20,49 @@ x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
+image: https://malkorganics.com/cdn/shop/files/malk_logo.svg
 tags:
 - Company
-apis: []
+- Consumer
+- Retail
+- E-Commerce
+- Food and Beverage
+- Consumer Packaged Goods
+- Plant-Based
+- Organic
+- Direct to Consumer
+- Agent Commerce
+- MCP
+- Shopify
+apis:
+- name: MALK Organics Storefront Commerce (UCP / MCP)
+  description: >-
+    MALK Organics's agent-facing commerce API, implemented via the Shopify Universal Commerce
+    Protocol (UCP) over MCP and served from MALK's own host. Agents can search and look up the
+    MALK product catalog, create and update a cart, drive a buyer-approved checkout, and read
+    order detail. Discoverable via /.well-known/ucp, /agents.md and /llms.txt. Read tools need
+    no authentication; completing a checkout requires contemporaneous buyer approval.
+  humanURL: https://malkorganics.com/agents.md
+  baseURL: https://malkorganics.com/api/ucp/mcp
+  tags:
+  - Agent Commerce
+  - MCP
+  - UCP
+  - Shopify
+  - E-Commerce
+  properties:
+  - type: MCPServer
+    url: mcp/malk-organics-mcp.yml
+  - type: LLMsTxt
+    url: llms/malk-organics-llms.txt
+  - type: Authentication
+    url: authentication/malk-organics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/malk-organics-scopes.yml
+  - type: RateLimits
+    url: rate-limits/malk-organics-rate-limits.yml
+  - type: Conventions
+    url: conventions/malk-organics-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +70,49 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://malkorganics.com/
+- type: MCPServer
+  url: mcp/malk-organics-mcp.yml
+- type: LLMsTxt
+  url: llms/malk-organics-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/malk-organics-well-known.yml
+- type: Authentication
+  url: authentication/malk-organics-authentication.yml
+- type: OAuthScopes
+  url: scopes/malk-organics-scopes.yml
+- type: Conformance
+  url: conformance/malk-organics-conformance.yml
+- type: Conventions
+  url: conventions/malk-organics-conventions.yml
+- type: Idempotency
+  url: conventions/malk-organics-conventions.yml
+- type: RateLimits
+  url: rate-limits/malk-organics-rate-limits.yml
+- type: Plans
+  url: plans/malk-organics-plans-pricing.yml
+- type: DomainSecurity
+  url: security/malk-organics-domain-security.yml
+- type: Lifecycle
+  url: lifecycle/malk-organics-lifecycle.yml
+- type: DataModel
+  url: data-model/malk-organics-data-model.yml
+- type: Documentation
+  url: https://malkorganics.com/agents.md
+- type: PrivacyPolicy
+  url: https://malkorganics.com/policies/privacy-policy
+- type: TermsOfService
+  url: https://malkorganics.com/pages/terms-conditions
+- type: Support
+  url: https://malkorganics.com/pages/contact
+- type: Blog
+  url: https://malkorganics.com/blogs/news
+- type: SignUp
+  url: https://malkorganics.com/account/login
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1

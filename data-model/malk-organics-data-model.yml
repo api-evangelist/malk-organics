@@ -1,0 +1,95 @@
+generated: '2026-08-25'
+method: derived
+source: mcp/malk-organics-mcp-tools.json
+notes: >-
+  Entity graph derived from the inputSchemas of the 13 tools returned by a live
+  tools/list on https://malkorganics.com/api/ucp/mcp (2026-08-25, HTTP 200). MALK publishes
+  no OpenAPI, so there are no $ref chains to walk; relationships below are read from the
+  nested object shapes and the id-reference fields in the tool schemas. Response schemas are
+  not published by the endpoint, so this graph is request-shape-complete and
+  response-shape-partial - stated so it is not mistaken for a full object reference.
+id_scheme:
+  style: Shopify Global ID (GID) URI
+  pattern: 'gid://shopify/{Type}/{id}'
+  observed:
+  - 'gid://shopify/Cart/abc123'
+  - 'gid://shopify/Checkout/abc123'
+entities:
+- name: Product
+  tools: [search_catalog, lookup_catalog, get_product]
+  identified_by: product identifier
+  note: The catalog surface. Read-only.
+- name: ProductVariant
+  tools: [lookup_catalog, get_product, create_cart, update_cart]
+  identified_by: variant id
+  note: >-
+    The purchasable unit. cart.line_items[].item.id is documented as "The Product Variant ID
+    to add or update".
+- name: Cart
+  tools: [create_cart, get_cart, update_cart, cancel_cart]
+  identified_by: 'gid://shopify/Cart/{id}'
+- name: LineItem
+  tools: [create_cart, update_cart, create_checkout, update_checkout]
+  identified_by: line item id
+  required_fields: [item, quantity]
+- name: Buyer
+  tools: [create_cart, update_cart, create_checkout, update_checkout]
+  fields: [email, phone_number]
+  note: additionalProperties true - the published shape is not exhaustive.
+- name: Checkout
+  tools: [create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout]
+  identified_by: 'gid://shopify/Checkout/{id}'
+- name: PaymentInstrument
+  tools: [create_checkout, update_checkout, complete_checkout]
+  fields: [id, handler_id, type, credential, billing_address]
+  handlers: [com.google.pay, dev.shopify.card, apple-pay]
+- name: Order
+  tools: [get_order, complete_checkout]
+  note: Read-only. Produced by complete_checkout; no mutation tool exists.
+- name: Context
+  tools: [search_catalog, create_cart, update_cart, create_checkout]
+  fields: [address_country, address_region, postal_code, language, currency, intent]
+  note: Provisional localization hints, superseded by authoritative data.
+- name: AgentProfile
+  tools: all
+  path: meta["ucp-agent"].profile
+  note: >-
+    A URI identifying the calling agent. Required on every one of the 13 tools - the only
+    field that is universal across the surface.
+relationships:
+- from: Cart
+  to: LineItem
+  type: has_many
+  via: cart.line_items[]
+- from: LineItem
+  to: ProductVariant
+  type: belongs_to
+  via: line_items[].item.id
+- from: Cart
+  to: Buyer
+  type: has_one
+  via: cart.buyer
+- from: Cart
+  to: Context
+  type: has_one
+  via: cart.context
+- from: Checkout
+  to: LineItem
+  type: has_many
+  via: checkout.line_items[]
+- from: Checkout
+  to: PaymentInstrument
+  type: has_many
+  via: checkout.payment.instruments[]
+- from: Checkout
+  to: Buyer
+  type: has_one
+  via: checkout.buyer
+- from: Order
+  to: Checkout
+  type: belongs_to
+  via: complete_checkout returns the order id for the completed checkout
+- from: ProductVariant
+  to: Product
+  type: belongs_to
+  via: catalog lookup by product/variant identifier

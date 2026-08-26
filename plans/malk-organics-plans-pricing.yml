@@ -1,0 +1,21 @@
+generated: '2026-08-25'
+method: searched
+source: https://malkorganics.com/agents.md
+notes: >-
+  MALK Organics sells physical consumer packaged goods, not API access. There is no developer
+  plan, no API pricing page, no metered tier and no paid API product of any kind. The UCP/MCP
+  commerce endpoint is free and anonymous to read; the only money on the surface is the retail
+  price of a bottle of plant-based milk, transacted through a buyer-approved checkout. This is
+  an honest zero, not a gap in the search.
+plan_count: 0
+plans: []
+commercial_model:
+  type: direct-to-consumer retail
+  api_monetized: false
+  api_access_cost: none
+  detail: >-
+    Catalog, cart and checkout tools answered anonymously with no key, no signup and no
+    quota. Product pricing is per-SKU and returned inline by search_catalog / get_product in
+    ISO 4217 minor units.
+  storefront: https://malkorganics.com/collections/all
+  retail_availability: https://malkorganics.com/pages/find-malk-stores

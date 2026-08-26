@@ -1,0 +1,35 @@
+generated: '2026-08-25'
+method: searched
+source: https://malkorganics.com/.well-known/openid-configuration
+docs: https://shopify.dev/docs/api/customer
+notes: >-
+  OAuth 2.0 / OIDC scopes advertised in scopes_supported by MALK Organics's Shopify Customer
+  Accounts authorization server, read from the discovery document served on malkorganics.com.
+  Descriptions reflect the Shopify Customer Account API and its MCP surface. MALK publishes no
+  OpenAPI, so there is no securitySchemes block to derive from.
+schemes:
+- name: ShopifyCustomerAccountOIDC
+  source: well-known/malk-organics-openid-configuration.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://shopify.com/authentication/64317849670/oauth/authorize
+    tokenUrl: https://shopify.com/authentication/64317849670/oauth/token
+scopes:
+- scope: openid
+  description: OpenID Connect authentication; issue an ID token for the buyer.
+  flows: [authorizationCode]
+  sources: [well-known/malk-organics-openid-configuration.json]
+- scope: email
+  description: Access the buyer's email address claim.
+  flows: [authorizationCode]
+  sources: [well-known/malk-organics-openid-configuration.json]
+- scope: customer-account-api:full
+  description: Full access to the Shopify Customer Account API on behalf of the signed-in buyer.
+  flows: [authorizationCode]
+  sources: [well-known/malk-organics-openid-configuration.json]
+- scope: customer-account-mcp-api:full
+  description: >-
+    Full access to the Customer Account MCP API surface for agent-driven commerce on behalf of
+    the signed-in buyer.
+  flows: [authorizationCode]
+  sources: [well-known/malk-organics-openid-configuration.json]

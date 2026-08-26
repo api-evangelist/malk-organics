@@ -1,0 +1,112 @@
+generated: '2026-08-25'
+method: searched
+status: published
+source: https://malkorganics.com/api/ucp/mcp
+notes: >-
+  MALK Organics runs a live Shopify Universal Commerce Protocol (UCP) MCP server on its own
+  host. An anonymous JSON-RPC tools/list POST returned HTTP 200 with 13 real tools and full
+  inputSchemas, captured verbatim in malk-organics-mcp-tools.json. The store advertises the
+  endpoint in its own /robots.txt, /agents.md and /.well-known/ucp merchant profile.
+ownership: >-
+  Served from malkorganics.com, MALK's own domain. The /.well-known/ucp merchant profile names
+  merchant_name "MalkOrganics", merchant_origin "malkorganics.com" and Shopify shop id
+  64317849670 - the same shop id as the OIDC issuer on the same host. Shopify is the platform
+  implementing UCP; the store, catalog and merchant identity are MALK's.
+server:
+  name: malk-organics
+  vendor: Shopify (UCP storefront commerce)
+  transport: http
+  protocol: mcp
+  url: https://malkorganics.com/api/ucp/mcp
+  ucp_endpoint: https://malkorganics.myshopify.com/api/ucp/mcp
+  discovery: https://malkorganics.com/.well-known/ucp
+  agent_instructions: https://malkorganics.com/agents.md
+  llms_txt: https://malkorganics.com/llms.txt
+  openrpc_schema: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  auth:
+    read_only: none
+    transacting: buyer-approved
+  ucp_versions:
+  - '2026-04-08'
+  - '2026-01-23'
+tools:
+- name: search_catalog
+  category: catalog
+  description: >-
+    Search MALK products by natural-language query, filters, or both. Cursor-paginated.
+    Response conforms to the UCP catalog search capability (dev.ucp.shopping.catalog.search).
+- name: lookup_catalog
+  category: catalog
+  description: Look up multiple products or variants by identifier.
+- name: get_product
+  category: catalog
+  description: Retrieve complete product detail by identifier; returns a single product.
+- name: create_cart
+  category: cart
+  description: Create a new cart with line items, buyer contact, and localization context hints.
+- name: get_cart
+  category: cart
+  description: Get the cart contents.
+- name: update_cart
+  category: cart
+  description: Perform updates to a cart (line items, quantities, buyer information).
+- name: cancel_cart
+  category: cart
+  description: Cancels a cart. Reversal path for cart creation.
+- name: create_checkout
+  category: checkout
+  description: >-
+    Creates a checkout. Returns line items, totals, and any applicable discounts or taxes.
+- name: get_checkout
+  category: checkout
+  description: Returns checkout detail including line items, totals, discounts and taxes.
+- name: update_checkout
+  category: checkout
+  description: Updates a checkout (shipping address, shipping method, buyer detail).
+- name: complete_checkout
+  category: checkout
+  description: >-
+    Completes a checkout and returns the order id / thank-you page URL or errors. Requires a
+    meta.idempotency-key. Buyer must approve payment; agents must not finalize payment
+    autonomously.
+- name: cancel_checkout
+  category: checkout
+  description: Cancels a checkout. Reversal path for checkout creation.
+- name: get_order
+  category: order
+  description: Get the details of an order.
+tool_count: 13
+capabilities:
+- dev.ucp.shopping.checkout
+- dev.ucp.shopping.fulfillment
+- dev.ucp.shopping.discount
+- dev.ucp.shopping.cart
+- dev.ucp.shopping.order
+- dev.ucp.shopping.catalog.search
+- dev.ucp.shopping.catalog.lookup
+- dev.shopify.catalog
+payment_handlers:
+- com.google.pay
+- dev.shopify.card
+deployment:
+  mode: remote
+  endpoint: https://malkorganics.com/api/ucp/mcp
+  auth: none
+  verified: probed
+  probe: live
+  http_status: 200
+  tools: 13
+  checked: '2026-08-25'
+x-evidence:
+- url: https://malkorganics.com/api/ucp/mcp
+  method: POST tools/list
+  http_status: 200
+  tools_returned: 13
+  fetched: '2026-08-25'
+- url: https://malkorganics.myshopify.com/api/ucp/mcp
+  method: POST tools/list
+  http_status: 200
+  fetched: '2026-08-25'
+- url: https://malkorganics.com/.well-known/ucp
+  http_status: 200
+  fetched: '2026-08-25'
