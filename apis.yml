@@ -57,6 +57,19 @@ tags:
 - Plant-Based
 - Organic
 - Direct to Consumer
+- Agentic Commerce
+- MCP
+- Shopify
+tags_raw:
+- Company
+- Consumer
+- Retail
+- E-Commerce
+- Food and Beverage
+- Consumer Packaged Goods
+- Plant-Based
+- Organic
+- Direct to Consumer
 - Agent Commerce
 - MCP
 - Shopify
@@ -71,6 +84,12 @@ apis:
   humanURL: https://malkorganics.com/agents.md
   baseURL: https://malkorganics.com/api/ucp/mcp
   tags:
+  - Agentic Commerce
+  - MCP
+  - Universal Commerce Protocol
+  - Shopify
+  - E-Commerce
+  tags_raw:
   - Agent Commerce
   - MCP
   - UCP
