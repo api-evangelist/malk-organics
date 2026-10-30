@@ -64,5 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-MALK Organics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+MALK Organics is an Austin, Texas plant-based beverage company founded in 2015, making clean-label organic almond, oat, cashew, coconut and soy milks plus non-dairy creamers with six ingredients or less and no gums, oils or fillers, sold nationwide through Whole Foods, Target, Kroger, Publix, Albertsons, Costco, H-E-B, Sprouts, Wegmans, Erewhon and Amazon. MALK publishes no traditional developer program, but its Shopify-powered direct-to-consumer storefront at malkorganics.com exposes a real, live agent-commerce surface: a Universal Commerce Protocol (UCP) MCP server answering an anonymous tools/list with 13 catalog, cart, checkout and order tools; OpenID Connect / OAuth 2.0 Customer Accounts authentication; a /.well-known/ucp merchant profile; a hand-maintained /llms.txt AI content index authored by MALK marketing; and an /agents.md agent-instructions document. This profile captures that agent-native commerce surface.
+
+**Areas:** Company · Consumer · Retail · E-Commerce · Food and Beverage · Consumer Packaged Goods · Plant-Based · Organic · Direct to Consumer · Agentic Commerce · MCP · Shopify
+
+## MALK Organics on APIs.io
+
+Everything profiled for MALK Organics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/malk-organics/](https://apis.io/providers/malk-organics/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [MALK Organics Storefront Commerce (UCP / MCP)](https://apis.io/apis/malk-organics/malk-organics-storefront-commerce-ucp-mcp/) — MALK Organics's agent-facing commerce API, implemented via the Shopify Universal Commerce Protocol (UCP) over MCP and served from MALK's own host. Agents…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [malk-organics](https://apis.io/servers/malk-organics/malk-organics/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Malk Organics Authentication](https://apis.io/security/malk-organics/malk-organics-authentication/)
+- [Malk Organics Domain Security](https://apis.io/security/malk-organics/malk-organics-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Malk Organics Scopes](https://apis.io/scopes/malk-organics/malk-organics-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Malk Organics Plans Pricing](https://apis.io/plans/malk-organics/malk-organics-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Malk Organics Rate Limits](https://apis.io/rate-limits/malk-organics/malk-organics-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://malkorganics.com/)
+- [Documentation](https://malkorganics.com/agents.md)
+- [Sign up](https://malkorganics.com/account/login)
+- [Support](https://malkorganics.com/pages/contact)
+- [Blog](https://malkorganics.com/blogs/news)
+- [Terms of service](https://malkorganics.com/pages/terms-conditions)
+- [Privacy policy](https://malkorganics.com/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 29.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 35.0 |
+| Access clarity | 34.2 |
+
+**Agent readiness 24.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | derived (partial credit) |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | unknown |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/malk-organics/](https://apis.io/providers/malk-organics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MALK Organics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/malk-organics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
